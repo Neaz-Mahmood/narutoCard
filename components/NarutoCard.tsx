@@ -36,7 +36,7 @@ const NarutoCard = ({
       <View>
         <Text style={styles.rank}>{rank}</Text>
       </View>
-      <View>
+      <View style={styles.jutsuContainer}>
         <Text style={styles.jutsu}>Jutsu: {jutsus.join(", ")}</Text>
       </View>
     </View>
@@ -86,7 +86,13 @@ const styles = StyleSheet.create({
     rank: {
         fontSize: 16,
     },
+    jutsuContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 16,
+    },
     jutsu: {
-        fontSize: 16,
+        fontSize: 22,
+        fontWeight: 'bold',
     },  
 });
