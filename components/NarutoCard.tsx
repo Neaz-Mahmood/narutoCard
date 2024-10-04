@@ -1,43 +1,32 @@
 import { Image, Platform, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
+
 type TCharacterDetails = {
   name: string;
-  age: number;
-  village: string;
-  rank: string;
-  image: string;
-  jutsus: string[];
-  hp: number;
+  images: string[];
+  jutsu: string[];
 };
 
 const NarutoCard = ({
   name,
-  age,
-  village,
-  rank,
-  image,
-  jutsus,
-  hp,
+  images,
+  jutsu,
 }: TCharacterDetails) => {
   return (
     <View style={styles.card}>
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.hp}>⚡ {hp}</Text>
       </View>
 
       <Image
-        source={{ uri: image }}
+        source={{ uri: images[0] }}
         style={styles.image}
         accessibilityLabel={name}
         resizeMode="contain"
       />
-      <View>
-        <Text style={styles.rank}>{rank}</Text>
-      </View>
       <View style={styles.jutsuContainer}>
-        <Text style={styles.jutsu}>Jutsu: {jutsus.join(", ")}</Text>
+        <Text style={styles.jutsu}>Jutsu: {jutsu?.join(", ")}</Text>
       </View>
     </View>
   );

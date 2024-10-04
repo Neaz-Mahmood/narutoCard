@@ -1,32 +1,50 @@
 import NarutoCard from "@/components/NarutoCard";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
   Platform,
-  View,
-  Text,
   ScrollView,
+  FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const baseUrl = 'https://narutodb.xyz/api';
+  
+
 export default function HomeScreen() {
-  const narutoData = {
-    name: "Naruto Uzumaki",
-    age: 32,
-    village: "Konoha",
-    rank: "Hokage",
-    image:
-      "https://i.pinimg.com/564x/22/3f/a8/223fa84e2e58598d27a6d733b5ff99e7.jpg",
-    jutsus: ["Shadow Clone Jutsu", "Rasengan", "Sage Mode"],
-    hp: 100,
-  };
+  const [data, setData] = useState([]);
+
+  const fetchCharacters = async () => {
+    try {
+    const abortController = new AbortController();
+    const url = `${baseUrl}/character`;
+    const response = await axios.get(url, {
+      signal: abortController.signal,
+    });
+    return response?.data ?? [];
+    } catch (error) {
+    console.error(error);
+    }
+  }
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchCharacters();
+      setData(data?.characters ?? []);
+    };
+    fetchData();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <NarutoCard {...narutoData} />
-        <NarutoCard {...narutoData} />
-        <NarutoCard {...narutoData} />
-        <NarutoCard {...narutoData} />
+        <FlatList
+        data={data}
+        renderItem={({ item }: any) => (<NarutoCard {...item}/>)}
+        keyExtractor={(item: any) => item?.id}
+      />
       </ScrollView>
     </SafeAreaView>
   );
@@ -39,3 +57,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
 });
+ 
