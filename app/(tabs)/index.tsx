@@ -1,60 +1,16 @@
-import NarutoCard from "@/components/NarutoCard";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  Platform,
-  ScrollView,
-  FlatList,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+// Only import react-native-gesture-handler on native platforms
+import 'react-native-gesture-handler';
 
-const baseUrl = 'https://narutodb.xyz/api';
-  
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './Home';
 
-export default function HomeScreen() {
-  const [data, setData] = useState([]);
+const Stack = createStackNavigator();
 
-  const fetchCharacters = async () => {
-    try {
-    const abortController = new AbortController();
-    const url = `${baseUrl}/character`;
-    const response = await axios.get(url, {
-      signal: abortController.signal,
-    });
-    return response?.data ?? [];
-    } catch (error) {
-    console.error(error);
-    }
-  }
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchCharacters();
-      setData(data?.characters ?? []);
-    };
-    fetchData();
-  }, []);
-
+export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <FlatList
-        data={data}
-        renderItem={({ item }: any) => (<NarutoCard {...item}/>)}
-        keyExtractor={(item: any) => item?.id}
-      />
-      </ScrollView>
-    </SafeAreaView>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === "android" ? 35 : 0,
-    backgroundColor: "#f5f5f5",
-  },
-});
- 
