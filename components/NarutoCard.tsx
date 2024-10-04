@@ -6,9 +6,11 @@ type TCharacterDetails = {
   name: string;
   images: string[];
   jutsu: string[];
+  id: number;
 };
 
 const NarutoCard = ({
+  id,
   name,
   images,
   jutsu,
