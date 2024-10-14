@@ -1,28 +1,28 @@
+import Details from "@/components/Details";
 import NarutoCard from "@/components/NarutoCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
-  Image,
   StyleSheet,
   Platform,
-  FlatList,
-  View,
   SafeAreaView,
 } from "react-native";
 
 const baseUrl = 'https://narutodb.xyz/api';
   
 
-export default function HomeScreen({ navigation }: any) {
-  const [data, setData] = useState([]);
+export default function DetailScreen({ navigation, route }: any) {
+  const { id } = route.params;
+  const [data, setData] = useState({});
 
   const fetchCharacters = async () => {
     try {
     const abortController = new AbortController();
-    const url = `${baseUrl}/character`;
+    const url = `${baseUrl}/character/${id}`;
     const response = await axios.get(url, {
       signal: abortController.signal,
     });
+    console.log(response)
     return response?.data ?? [];
     } catch (error) {
     console.error(error);
@@ -32,20 +32,15 @@ export default function HomeScreen({ navigation }: any) {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchCharacters();
-      setData(data?.characters ?? []);
+      console.log(data, "data")
+      setData(data ?? {});
     };
     fetchData();
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <FlatList
-        data={data}
-        renderItem={({ item }: any) => (<NarutoCard {...item} navigation={navigation}/>)}
-        keyExtractor={(item: any) => item?.id}
-      />
-      </View>
+      <Details data={data} navigation={navigation} />
     </SafeAreaView>
   );
 }

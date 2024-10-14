@@ -2,21 +2,12 @@ import { Button, Image, Platform, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 
-type TCharacterDetails = {
-  name: string;
-  images: string[];
-  jutsu: string[];
-  id: number;
-  navigation: any
-};
 
-const NarutoCard = ({
-  id,
-  name,
-  images,
-  jutsu,
-  navigation
-}: TCharacterDetails) => {
+const Details = ({
+  data,
+  navigation,
+}: any) => {
+  const { id, name, images, jutsu } = data;
   return (
     <View style={styles.card}>
       <View style={styles.nameContainer}>
@@ -33,21 +24,22 @@ const NarutoCard = ({
         <Text style={styles.jutsu}>Jutsu: {jutsu?.join(", ")}</Text>
       </View>
       <View >
-        <Button title="View Details" onPress={() => navigation.navigate('Details', { id })} />
+        <Button title="Home" onPress={() => navigation.navigate('Home')} />
       </View>
     </View>
   );
 };
 
-export default NarutoCard;
+export default Details;
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     backgroundColor: "white",
     margin: 16,
     padding: 16,
-    borderRadius: 16,
-    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
     ...Platform.select({
       ios: {
         shadowColor: "#333",
