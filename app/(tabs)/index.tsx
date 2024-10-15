@@ -11,7 +11,7 @@ export default function App() {
   return (
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailScreen} />
+        <Stack.Screen name="Details" component={DetailScreen} options={({ route }: any) => ({ title: route?.params?.name })} />
       </Stack.Navigator>
   );
 }

@@ -6,8 +6,7 @@ import {
   StyleSheet,
   Platform,
   SafeAreaView,
-  View,
-  Text,
+  ScrollView,
 } from "react-native";
 
 const baseUrl = 'https://narutodb.xyz/api';
@@ -40,10 +39,9 @@ export default function DetailScreen({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Text>Detail</Text>
-      </View>
+      <ScrollView style={styles.scrollView}>
       <Details data={data} navigation={navigation} />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -53,6 +51,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === "android" ? 35 : 0,
     backgroundColor: "#f5f5f5",
+  },
+  scrollView: {
+    flex: 1,
   },
 });
  
