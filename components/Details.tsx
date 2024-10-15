@@ -7,25 +7,26 @@ const Details = ({
   data,
   navigation,
 }: any) => {
-  const { id, name, images, jutsu } = data;
   return (
     <View style={styles.card}>
       <View style={styles.nameContainer}>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>{data?.name}</Text>
       </View>
+     
 
       <Image
-        source={{ uri: images[0] }}
+        source={{ uri: data?.images?.[0] }}
         style={styles.image}
-        accessibilityLabel={name}
+        accessibilityLabel={data?.name}
         resizeMode="contain"
       />
       <View style={styles.jutsuContainer}>
-        <Text style={styles.jutsu}>Jutsu: {jutsu?.join(", ")}</Text>
+        <Text style={styles.jutsu}>Jutsu: {data?.jutsu?.join(", ")}</Text>
       </View>
+
       <View >
         <Button title="Home" onPress={() => navigation.navigate('Home')} />
-      </View>
+      </View> 
     </View>
   );
 };

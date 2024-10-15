@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Platform,
   SafeAreaView,
+  View,
+  Text,
 } from "react-native";
 
 const baseUrl = 'https://narutodb.xyz/api';
@@ -22,8 +24,7 @@ export default function DetailScreen({ navigation, route }: any) {
     const response = await axios.get(url, {
       signal: abortController.signal,
     });
-    console.log(response)
-    return response?.data ?? [];
+    return response?.data ?? {};
     } catch (error) {
     console.error(error);
     }
@@ -32,7 +33,6 @@ export default function DetailScreen({ navigation, route }: any) {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchCharacters();
-      console.log(data, "data")
       setData(data ?? {});
     };
     fetchData();
@@ -40,6 +40,9 @@ export default function DetailScreen({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View>
+        <Text>Detail</Text>
+      </View>
       <Details data={data} navigation={navigation} />
     </SafeAreaView>
   );
