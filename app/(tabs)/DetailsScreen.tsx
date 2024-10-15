@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Platform,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 
 const baseUrl = 'https://narutodb.xyz/api';
@@ -22,8 +23,7 @@ export default function DetailScreen({ navigation, route }: any) {
     const response = await axios.get(url, {
       signal: abortController.signal,
     });
-    console.log(response)
-    return response?.data ?? [];
+    return response?.data ?? {};
     } catch (error) {
     console.error(error);
     }
@@ -32,7 +32,6 @@ export default function DetailScreen({ navigation, route }: any) {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchCharacters();
-      console.log(data, "data")
       setData(data ?? {});
     };
     fetchData();
@@ -40,7 +39,9 @@ export default function DetailScreen({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
       <Details data={data} navigation={navigation} />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -50,6 +51,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === "android" ? 35 : 0,
     backgroundColor: "#f5f5f5",
+  },
+  scrollView: {
+    flex: 1,
   },
 });
  

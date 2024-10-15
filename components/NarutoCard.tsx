@@ -33,7 +33,7 @@ const NarutoCard = ({
         <Text style={styles.jutsu}>Jutsu: {jutsu?.join(", ")}</Text>
       </View>
       <View >
-        <Button title="View Details" onPress={() => navigation.navigate('Details', { id })} />
+        <Button title="View Details" onPress={() => navigation.navigate('Details', { id, name })} />
       </View>
     </View>
   );
